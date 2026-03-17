@@ -1,26 +1,34 @@
 {
   "name": "node-sass",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "libsass": "3.5.5",
-  "description": "Wrapper around libsass",
+  "description": "Wrapper around libsass with extended support beyond Node.js 20+",
   "license": "MIT",
-  "bugs": "https://github.com/sass/node-sass/issues",
-  "homepage": "https://github.com/sass/node-sass",
+  "bugs": "https://github.com/HydraOrc/node-sass/issues",
+  "homepage": "https://github.com/HydraOrc/node-sass",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sass/node-sass"
+    "url": "https://github.com/HydraOrc/node-sass"
   },
   "author": {
     "name": "Andrew Nesbitt",
     "email": "andrewnez@gmail.com",
-    "url": "http://andrew.github.com"
+    "url": "https://andrew.github.com"
   },
+  "contributors": [{
+    "name": "Andrew Nesbitt",
+    "email": "andrewnez@gmail.com",
+    "url": "https://andrew.github.com"
+  }, {
+    "name":"Ruslan Hydra",
+    "url":"https://github.com/HydraOrc"
+  }],
   "engines": {
     "node": ">=16"
   },
   "main": "lib/index.js",
   "nodeSassConfig": {
-    "binarySite": "https://github.com/sass/node-sass/releases/download"
+    "binarySite": "https://github.com/HydraOrc/node-sass/tree/master/vendor"
   },
   "bin": {
     "node-sass": "bin/node-sass"
