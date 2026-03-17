@@ -14,7 +14,6 @@ Keywords: node-sass, Node.js, Node 22, Node 24, support
 ## Node version support policy
 
 1. Supported Node.js versions vary by release, please consult the [releases page](https://github.com/sass/node-sass/releases).
-1. Node versions that hit end of life <https://github.com/nodejs/Release>, will be dropped from support at each node-sass release (major, minor).
 1. We will stop building binaries for unsupported releases, testing for breakages in dependency compatibility, but we will not block installations for those that want to support themselves.
 1. New node release require minor internal changes along with support from CI providers (AppVeyor, GitHub Actions). We will open a single issue for interested parties to subscribe to, and close additional issues.
 
