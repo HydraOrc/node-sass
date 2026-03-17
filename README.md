@@ -2,7 +2,12 @@
 
 This is a non-official extended LTS bindings support for node-sass in case you need to increase a Node.js version for whatever reason on your project.
 
-It currently supports Node 22 / 24 on Ubuntu and Windows on top of already supported Node 16 / 18 / 20. The easiest solution will be just to copy binding.node from corresponding vendor folder into your node_modules vendor folder for node-sass.
+It currently supports Node 22 / 24 on Ubuntu and Windows on top of already supported Node 16 / 18 / 20.
+
+Install through package.json devDependencies:
+`"node-sass": "git+ssh://git@github.com/HydraOrc/node-sass"`
+
+Or you can copy binding.node from corresponding vendor folder into your node_modules vendor folder for node-sass.
 
 Keywords: node-sass, Node.js, Node 22, Node 24, support
 
