@@ -596,12 +596,33 @@ namespace Sass {
       // lhs is number and rhs is color
       else if (Color_Ptr r_c = Cast<Color>(rhs)) {
         try {
+          const Number& left = *l_n;
+          const Color& right = *r_c;
+
+          bool is_equal = left.operator==(right);
+
           switch (op_type) {
-            case Sass_OP::EQ: return *l_n == *r_c ? bool_true : bool_false;
-            case Sass_OP::NEQ: return *l_n == *r_c ? bool_false : bool_true;
-            case Sass_OP::ADD: case Sass_OP::SUB: case Sass_OP::MUL: case Sass_OP::DIV: case Sass_OP::MOD:
-              return Operators::op_number_color(op_type, *l_n, *r_c, ctx.c_options, b_in->pstate());
-            default: break;
+            case Sass_OP::EQ:
+              return is_equal ? bool_true : bool_false;
+
+            case Sass_OP::NEQ:
+              return is_equal ? bool_false : bool_true;
+
+            case Sass_OP::ADD:
+            case Sass_OP::SUB:
+            case Sass_OP::MUL:
+            case Sass_OP::DIV:
+            case Sass_OP::MOD:
+              return Operators::op_number_color(
+                op_type,
+                left,
+                right,
+                ctx.c_options,
+                b_in->pstate()
+              );
+
+            default:
+              break;
           }
         }
         catch (Exception::OperationError& err)
@@ -637,11 +658,31 @@ namespace Sass {
       else if (Number_Ptr r_n = Cast<Number>(rhs)) {
         try {
           switch (op_type) {
-            case Sass_OP::EQ: return *l_c == *r_n ? bool_true : bool_false;
-            case Sass_OP::NEQ: return *l_c == *r_n ? bool_false : bool_true;
-            case Sass_OP::ADD: case Sass_OP::SUB: case Sass_OP::MUL: case Sass_OP::DIV: case Sass_OP::MOD:
-              return Operators::op_color_number(op_type, *l_c, *r_n, ctx.c_options, b_in->pstate());
-            default: break;
+            case Sass_OP::EQ: {
+              bool is_equal = l_c->operator==(*r_n);
+              return is_equal ? bool_true : bool_false;
+            }
+
+            case Sass_OP::NEQ: {
+              bool is_equal = l_c->operator==(*r_n);
+              return is_equal ? bool_false : bool_true;
+            }
+
+            case Sass_OP::ADD:
+            case Sass_OP::SUB:
+            case Sass_OP::MUL:
+            case Sass_OP::DIV:
+            case Sass_OP::MOD:
+              return Operators::op_color_number(
+                op_type,
+                *l_c,
+                *r_n,
+                ctx.c_options,
+                b_in->pstate()
+              );
+
+            default:
+              break;
           }
         }
         catch (Exception::OperationError& err)

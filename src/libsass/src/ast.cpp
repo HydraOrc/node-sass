@@ -346,15 +346,38 @@ namespace Sass {
     return unified.detach();
   }
 
-  bool Complex_Selector::operator== (const Selector& rhs) const
+  bool Complex_Selector::operator==(const Selector& rhs) const
   {
-    if (const Selector_List* sl = Cast<Selector_List>(&rhs)) return *this == *sl;
-    if (const Simple_Selector* sp = Cast<Simple_Selector>(&rhs)) return *this == *sp;
-    if (const Complex_Selector* cs = Cast<Complex_Selector>(&rhs)) return *this == *cs;
-    if (const Compound_Selector* ch = Cast<Compound_Selector>(&rhs)) return *this == *ch;
+    const Selector_List* selector_list = Cast<Selector_List>(&rhs);
+    if (selector_list != nullptr)
+    {
+      const Selector_List& rhs_ref = *selector_list;
+      return Complex_Selector::operator==(rhs_ref);
+    }
+
+    const Simple_Selector* simple_selector = Cast<Simple_Selector>(&rhs);
+    if (simple_selector != nullptr)
+    {
+      const Simple_Selector& rhs_ref = *simple_selector;
+      return Complex_Selector::operator==(rhs_ref);
+    }
+
+    const Complex_Selector* complex_selector = Cast<Complex_Selector>(&rhs);
+    if (complex_selector != nullptr)
+    {
+      const Complex_Selector& rhs_ref = *complex_selector;
+      return Complex_Selector::operator==(rhs_ref);
+    }
+
+    const Compound_Selector* compound_selector = Cast<Compound_Selector>(&rhs);
+    if (compound_selector != nullptr)
+    {
+      const Compound_Selector& rhs_ref = *compound_selector;
+      return Complex_Selector::operator==(rhs_ref);
+    }
+
     throw std::runtime_error("invalid selector base classes to compare");
   }
-
 
   bool Complex_Selector::operator< (const Selector& rhs) const
   {
@@ -365,12 +388,36 @@ namespace Sass {
     throw std::runtime_error("invalid selector base classes to compare");
   }
 
-  bool Compound_Selector::operator== (const Selector& rhs) const
+  bool Compound_Selector::operator==(const Selector& rhs) const
   {
-    if (const Selector_List* sl = Cast<Selector_List>(&rhs)) return *this == *sl;
-    if (const Simple_Selector* sp = Cast<Simple_Selector>(&rhs)) return *this == *sp;
-    if (const Complex_Selector* cs = Cast<Complex_Selector>(&rhs)) return *this == *cs;
-    if (const Compound_Selector* ch = Cast<Compound_Selector>(&rhs)) return *this == *ch;
+    const Selector_List* selector_list = Cast<Selector_List>(&rhs);
+    if (selector_list != nullptr)
+    {
+      const Selector_List& rhs_ref = *selector_list;
+      return Compound_Selector::operator==(rhs_ref);
+    }
+
+    const Simple_Selector* simple_selector = Cast<Simple_Selector>(&rhs);
+    if (simple_selector != nullptr)
+    {
+      const Simple_Selector& rhs_ref = *simple_selector;
+      return Compound_Selector::operator==(rhs_ref);
+    }
+
+    const Complex_Selector* complex_selector = Cast<Complex_Selector>(&rhs);
+    if (complex_selector != nullptr)
+    {
+      const Complex_Selector& rhs_ref = *complex_selector;
+      return Compound_Selector::operator==(rhs_ref);
+    }
+
+    const Compound_Selector* compound_selector = Cast<Compound_Selector>(&rhs);
+    if (compound_selector != nullptr)
+    {
+      const Compound_Selector& rhs_ref = *compound_selector;
+      return Compound_Selector::operator==(rhs_ref);
+    }
+
     throw std::runtime_error("invalid selector base classes to compare");
   }
 
@@ -437,23 +484,52 @@ namespace Sass {
     return ns_ < rhs.ns_;
   }
 
-  bool Selector_List::operator== (const Selector& rhs) const
+  bool Selector_List::operator==(const Selector& rhs) const
   {
-    // solve the double dispatch problem by using RTTI information via dynamic cast
-    if (Selector_List_Ptr_Const sl = Cast<Selector_List>(&rhs)) { return *this == *sl; }
-    else if (Complex_Selector_Ptr_Const cpx = Cast<Complex_Selector>(&rhs)) { return *this == *cpx; }
-    else if (Compound_Selector_Ptr_Const cpd = Cast<Compound_Selector>(&rhs)) { return *this == *cpd; }
-    // no compare method
+    // explicit runtime dispatch via Cast, no inline ambiguity
+
+    const Selector_List* selector_list = Cast<Selector_List>(&rhs);
+    if (selector_list != nullptr)
+    {
+      const Selector_List& rhs_ref = *selector_list;
+      return Selector_List::operator==(rhs_ref);
+    }
+
+    const Complex_Selector* complex_selector = Cast<Complex_Selector>(&rhs);
+    if (complex_selector != nullptr)
+    {
+      const Complex_Selector& rhs_ref = *complex_selector;
+      return Selector_List::operator==(rhs_ref);
+    }
+
+    const Compound_Selector* compound_selector = Cast<Compound_Selector>(&rhs);
+    if (compound_selector != nullptr)
+    {
+      const Compound_Selector& rhs_ref = *compound_selector;
+      return Selector_List::operator==(rhs_ref);
+    }
+
+    // fallback: no meaningful comparison available
     return this == &rhs;
   }
 
   // Selector lists can be compared to comma lists
-  bool Selector_List::operator== (const Expression& rhs) const
+  bool Selector_List::operator==(const Expression& rhs) const
   {
-    // solve the double dispatch problem by using RTTI information via dynamic cast
-    if (List_Ptr_Const ls = Cast<List>(&rhs)) { return *ls == *this; }
-    if (Selector_Ptr_Const ls = Cast<Selector>(&rhs)) { return *this == *ls; }
-    // compare invalid (maybe we should error?)
+    const List* list_expr = Cast<List>(&rhs);
+    if (list_expr != nullptr)
+    {
+      const List& rhs_ref = *list_expr;
+      return rhs_ref.operator==(*this); // явно указываем сторону
+    }
+
+    const Selector* selector_expr = Cast<Selector>(&rhs);
+    if (selector_expr != nullptr)
+    {
+      const Selector& rhs_ref = *selector_expr;
+      return Selector_List::operator==(rhs_ref);
+    }
+
     return false;
   }
 

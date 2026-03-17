@@ -2,9 +2,7 @@
 
 This is a non-official extended LTS bindings support for node-sass in case you need to increase a Node.js version for whatever reason on your project.
 
-It currently supports Node 16 / 18 / 20 on Windows and Node 16 / 18 / 20 / 22 / 24 on Ubuntu. The easiest solution will be just to copy binding.node from corresponding vendor folder into your node_modules vendor folder for node-sass.
-
-Let me know in the issues section if you have a way to generate newer bindings 22 / 24 for Windows platform, because for me they just don't work.
+It currently supports Node 22 / 24 on Ubuntu and Windows on top of already supported Node 16 / 18 / 20. The easiest solution will be just to copy binding.node from corresponding vendor folder into your node_modules vendor folder for node-sass.
 
 Keywords: node-sass, Node.js, Node 22, Node 24, support
 
