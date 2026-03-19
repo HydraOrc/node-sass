@@ -5,7 +5,7 @@ This is a non-official extended LTS bindings support for node-sass in case you n
 It currently supports Node 22 / 24 on Ubuntu and Windows on top of already supported Node 16 / 18 / 20.
 
 Install through package.json devDependencies:
-`"node-sass": "git+ssh://git@github.com/HydraOrc/node-sass"`
+`"node-sass": "git+https://github.com/HydraOrc/node-sass"`
 
 Or you can copy binding.node from corresponding vendor folder into your node_modules vendor folder for node-sass.
 
