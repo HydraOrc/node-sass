@@ -40,7 +40,8 @@
     "postinstall": "node scripts/build.js",
     "lint": "eslint bin/node-sass lib scripts test",
     "test": "mocha test/{*,**/**}.js",
-    "build": "node scripts/build.js --force",
+    "build": "node scripts/build.js",
+    "build:force": "node scripts/build.js --force",
     "prepublishOnly ": "scripts/prepublish.js"
   },
   "files": [
